@@ -1,4 +1,9 @@
 def generate_password(word1, word2, word3):
+    # Validate the length of each word
+    validate_word_length(word1)
+    validate_word_length(word2)
+    validate_word_length(word3)
+
     # Fill words with 'X' if they have less than 2 characters
     word1 = word1.ljust(2, 'X')
     word2 = word2.ljust(2, 'X')
@@ -22,21 +27,24 @@ def validate_password(user_password, generated_password):
         else:
             print("Incorrect password")
 
+def validate_word_length(word):
+    # Validate the length of the word
+    if 4 <= len(word) <= 8:
+        print(f"The word '{word}' is correct.")
+    elif len(word) < 4:
+        print(f"Missing letters. Only has {len(word)} letters: {word}")
+    else:
+        print(f"Extra letters. Has {len(word)} letters: {word}")
+
 # Request words from the user
 word1 = input("Enter the first word: ")
 word2 = input("Enter the second word: ")
 word3 = input("Enter the third word: ")
 
-# Generate password and display it to the user
+# Validate words and generate password
 generated_password = generate_password(word1, word2, word3)
 print("The generated password is:", generated_password)
 
 # Request password from the user and validate it
 user_password = input("Enter the password: ")
 validate_password(user_password, generated_password)
-
-
-
-# Call to the main function
-if __name__ == "__main__":
-    main()
