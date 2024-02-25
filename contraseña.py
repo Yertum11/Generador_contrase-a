@@ -1,50 +1,40 @@
-def get_valid_word(word):
-    """
-    Ensures that the word has at least 2 characters.
-    If it's longer, it will be truncated to 2 characters.
-    If it's shorter, it will be padded with 'X'.
-    """
-    if len(word) < 2:
-        word = "X" + word
-    elif len(word) > 2:
-        word = word[:2]
-    return word
+def generate_password(word1, word2, word3):
+    # Fill words with 'X' if they have less than 2 characters
+    word1 = word1.ljust(2, 'X')
+    word2 = word2.ljust(2, 'X')
+    word3 = word3.ljust(2, 'X')
 
+    # Generate password
+    password = ''.join([word1[0], word2[0], word3[0], word1[1], word2[1], word3[1]])
 
-def generate_password():
-    """
-    Prompts the user for three words, validates them, and generates the password.
-    """
-    word1 = get_valid_word(input("Enter the first word: "))
-    word2 = get_valid_word(input("Enter the second word: "))
-    word3 = get_valid_word(input("Enter the third word: "))
-
-    password = word1 + word2 + word3
-    print("The password is:", password)
     return password
 
-
-def check_password(password, user_password):
-    """
-    Verifies the length and correctness of the user-entered password.
-    """
-    if len(user_password) < len(password):
-        print("Missing", len(password) - len(user_password), "characters")
-    elif len(user_password) > len(password):
-        print("Excess", len(user_password) - len(password), "characters")
-    elif user_password == password:
-        print("Correct password")
+def validate_password(user_password, generated_password):
+    # Validate the length of the password
+    if len(user_password) < len(generated_password):
+        print(f"Missing {len(generated_password) - len(user_password)} characters")
+    elif len(user_password) > len(generated_password):
+        print(f"Extra {len(user_password) - len(generated_password)} characters")
     else:
-        print("Incorrect password")
+        # Check if the password is correct
+        if user_password == generated_password:
+            print("Correct password")
+        else:
+            print("Incorrect password")
 
+# Request words from the user
+word1 = input("Enter the first word: ")
+word2 = input("Enter the second word: ")
+word3 = input("Enter the third word: ")
 
-def main():
-    """
-    Main function that calls the above functions to execute the program.
-    """
-    generated_password = generate_password()
-    user_password = input("Enter the password: ")
-    check_password(generated_password, user_password)
+# Generate password and display it to the user
+generated_password = generate_password(word1, word2, word3)
+print("The generated password is:", generated_password)
+
+# Request password from the user and validate it
+user_password = input("Enter the password: ")
+validate_password(user_password, generated_password)
+
 
 
 # Call to the main function
